@@ -1,7 +1,10 @@
 <html><head><meta charset="utf-8" scite="coding: utf-8"/>
 <title>Wildlife Trafficking Mapper</title>
 <style type="text/css">
-
+button
+{	border-radius:8px 8px 8px 8px;
+	background:radial-gradient(ellipse at 50% 50%, #9ff 0%, #0ff 60%, #00f 100%);
+}
 </style>
 <script type="text/javascript">
 const Ranks=[
@@ -26,8 +29,8 @@ var UserRanking=0;
 <td style="vertical-align:top;text-align:center">
 <div id="LogIn" style="display:none;height:0px">
 	<br/><br/><br/>
-	<label for="Username">Username: </label><input type="text" id="Username" name="Username" value="" placeholder="Enter username" title="Enter username (optional)" size="20" onkeyup="" onchange=""/><br/><br/>
-	<label for="Password">Password: </label><input type="password" id="Password" name="Password" value="" placeholder="Enter password" title="Enter password" size="20" onkeyup="" onchange=""/><br/><br/>
+	<label for="Username">Username: </label><input type="text" id="Username" name="Username" value="" placeholder="Enter username" title="Enter username (optional)" size="20"/><br/><br/>
+	<label for="Password">Password: </label><input type="password" id="Password" name="Password" value="" placeholder="Enter password" title="Enter password" size="20"/><br/><br/>
 	<button type="button" id="Anonymous" name="Anonymous" title="Access anonymously" style="padding-left:16px;padding-right:16px" onclick="Legioning()">Anonymous</button>
 	<button type="button" id="LoggingIn" name="LoggingIn" title="Access your account" style="padding-left:16px;padding-right:16px" onclick="LoggingIn()">Log in</button>
 </div>
@@ -42,8 +45,8 @@ var UserRanking=0;
 	<table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:auto">
 	<tr>
 	<td>
-	<label for="Address">Place of occurrence: </label><input type="text" id="Address" name="Address" value="" placeholder="Address or coordinates" title="Enter address of coordinates of occurrence" size="20" onkeyup="" onchange=""/><br/><br/>
-	<label for="Species">Species: </label><input id="Species" value="" list="SpeciesList" placeholder="Identification of the species" title="Enter the species or common name" size="20" onkeyup="" onchange=""/><br/><br/>
+	<label for="Address">Place of occurrence: </label><input type="text" id="Address" name="Address" value="" placeholder="Address or coordinates" title="Enter address of coordinates of occurrence" size="20"/><br/><br/>
+	<label for="Species">Species: </label><input id="Species" value="" list="SpeciesList" placeholder="Identification of the species" title="Enter the species or common name" size="20"/><br/><br/>
 	<datalist id="SpeciesList">
 		<option>Saffron Finch (Sicalis flaveola)</option>
 		<option>Canário-da-terra (Sicalis flaveola)</option>
@@ -86,7 +89,7 @@ var UserRanking=0;
 		<option value="Remains">Remains</option>
 		<option value="Trophy">Parts or hunting trophy</option>
 	</select><br/><br/>
-	<label for="ExtraInfo">Other information: </label><input type="text" id="ExtraInfo" name="ExtraInfo" value="" placeholder="Other information (vehicle description, persons involved)" title="Enter other information, like vehicle description and licence plate, persons involved and so on" size="20" onkeyup="" onchange=""/>
+	<label for="ExtraInfo">Other information: </label><input type="text" id="ExtraInfo" name="ExtraInfo" value="" placeholder="Other information (vehicle description, persons involved)" title="Enter other information, like vehicle description and licence plate, persons involved and so on" size="20"/>
 	<label for="Files">Upload files:</label><br/><input type="file" id="Files" name="Files" multiple><br/><br/>
 	<input type="checkbox" id="Report" name="Report"/><label for="Report" title="Do you wish to report to the authorities?">Report to authorities?</label><br/>
 	<input type="checkbox" id="PostIt" name="PostIt" checked="checked"/><label for="PostIt" title="Would you want to share your contribution?">Share this contribution?</label><br/>
@@ -135,7 +138,11 @@ var UserRanking=0;
 	<td id="Posts" style="vertical-align:top;height:200px;overflow:hidden"></td>
 </tr>
 <tr>
-	<td style="vertical-align:top;text-align:center"><button type="button" id="NewContrib" name="NewContrib" title="Click here to go make a new contribution" style="padding-left:16px;padding-right:16px">New Contribution</button></td>
+	<td style="vertical-align:top;text-align:center">
+		<input type="text" id="NewMsg" name="NewMsg" value="" placeholder="Enter message" title="Enter message to be posted" size="40"/>
+		<button type="button" id="Messaging" name="Messaging" title="Click here to go make a new contribution" style="padding-left:16px;padding-right:16px">Post</button><br/>
+		<button type="button" id="NewContrib" name="NewContrib" title="Click here to go make a new contribution" style="padding-left:16px;padding-right:16px">New Contribution</button>
+	</td>
 </tr>
 </table>
 </div>
@@ -145,6 +152,9 @@ var UserRanking=0;
 <script type="text/javascript">
 Display("LogIn");
 document.getElementById("LoggingIn").addEventListener("click",LoggingIn);
+document.getElementById("NewContrib").addEventListener("click",NewContrib);
+document.getElementById("Register").addEventListener("click",Register);
+document.getElementById("Messaging").addEventListener("click",PostMsg);
 
 function Display(X)
 {	document.getElementById("LogIn").style.display="none";
@@ -177,7 +187,7 @@ function Legioning()
 	document.getElementById("UserDisplay").innerHTML=Username;
 	document.getElementById("UserCounter").innerHTML="--";
 	document.getElementById("UserRanking").innerHTML="--";
-	NewContrib();
+	Chatting();
 }
 
 function LoggingIn()
@@ -187,7 +197,7 @@ function LoggingIn()
 	document.getElementById("UserDisplay").innerHTML=Username;
 	document.getElementById("UserCounter").innerHTML=UserCounter;
 	document.getElementById("UserRanking").innerHTML=Ranks[UserRanking];
-	NewContrib();
+	Chatting();
 }
 
 function Register()
@@ -206,10 +216,11 @@ function Register()
 		document.getElementById("UserRanking").innerHTML=Ranks[UserRanking];
 
 	var CurTime=new Date();
+
 	CurTime=CurTime.getFullYear()+"-"+(CurTime.getMonth()+1)+"-"+(CurTime.getDate());
 
 	if (document.getElementById("PostIt").checked)
-		document.getElementById("Posts").innerHTML+=CurTime+": "+document.getElementById("Species").value+" at "+document.getElementById("Address").value+"<br/>";
+		document.getElementById("Posts").innerHTML+="<span style=\"color:#00f\">"+Username+"</span> ("+CurTime+") contributed about <span style=\"color:#f00\">"+document.getElementById("Species").value+"</span> at <span style=\"color:#090\">"+document.getElementById("Address").value+"</span><br/>";
 
 	document.getElementById("Address").value="";
 	document.getElementById("Species").value="";
@@ -220,13 +231,23 @@ function Register()
 	document.getElementById("Report").checked=false;
 	document.getElementById("PostIt").checked=true;
 	Display("Mapper");
-	document.getElementById("NewContrib").addEventListener("click",NewContrib);
 }
 
 function NewContrib()
 {	Display("Contrib");
-	document.getElementById("Register").addEventListener("click",Register);
 }
 
+function Chatting()
+{	Display("Mapper");
+}
+
+function PostMsg()
+{	var CurTime=new Date();
+
+	CurTime=CurTime.getFullYear()+"-"+(CurTime.getMonth()+1)+"-"+(CurTime.getDate());
+
+	document.getElementById("Posts").innerHTML+="<span style=\"color:#00f\">"+Username+"</span> ("+CurTime+"): "+document.getElementById("NewMsg").value+"<br/>";
+	document.getElementById("NewMsg").value="";
+}
 </script>
 </body></html>
