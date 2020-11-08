@@ -111,9 +111,19 @@ var UserRanking=0;
 			</g>
 		</g>
 		<g transform="scale(1.0)">
-			<circle id="Spot" cx="300" cy="220" r="10" fill="#f00" stroke="black" stroke-width="1px"/>
-			<animate xlink:href="#Spot" attributeType="auto" attributeName="fill" dur="0.5s" to="#f00"/>
-			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="0.5s" repeatCount="indefinite" />
+			<circle id="Spot00" cx="300" cy="220" r="10" fill="#f00" stroke="black" stroke-width="1px"/>
+			<animate xlink:href="#Spot00" attributeType="auto" attributeName="fill" dur="0.5s" to="#f00"/>
+			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="0.5s" repeatCount="indefinite"/>
+		</g>
+		<g transform="scale(1.0)">
+			<circle id="Spot01" cx="310" cy="240" r="10" fill="#f00" stroke="black" stroke-width="1px"/>
+			<animate xlink:href="#Spot01" attributeType="auto" attributeName="fill" dur="0.5s" to="#0f0"/>
+			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="0.5s" begin="0.1s" repeatCount="indefinite"/>
+		</g>
+		<g transform="scale(1.0)">
+			<circle id="Spot02" cx="450" cy="80" r="10" fill="#f00" stroke="black" stroke-width="1px"/>
+			<animate xlink:href="#Spot02" attributeType="auto" attributeName="fill" dur="0.5s" to="#0f0"/>
+			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="0.5s" begin="0.05s" repeatCount="indefinite"/>
 		</g>
 	</g>
 </svg>
@@ -122,7 +132,7 @@ var UserRanking=0;
 <tr>
 <td style="background:#88f;width:350px">Posts</td>
 </tr>
-	<td id="Posts" style="vertical-align:top;height:200px;overflow:hidden"><br/>Good day!<br/></td>
+	<td id="Posts" style="vertical-align:top;height:200px;overflow:hidden"></td>
 </tr>
 <tr>
 	<td style="vertical-align:top;text-align:center"><button type="button" id="NewContrib" name="NewContrib" title="Click here to go make a new contribution" style="padding-left:16px;padding-right:16px">New Contribution</button></td>
@@ -198,7 +208,8 @@ function Register()
 	var CurTime=new Date();
 	CurTime=CurTime.getFullYear()+"-"+(CurTime.getMonth()+1)+"-"+(CurTime.getDate());
 
-	document.getElementById("Posts").innerHTML+=CurTime+": "+document.getElementById("Species").value+" at "+document.getElementById("Address").value+"<br/>";
+	if (document.getElementById("PostIt").checked)
+		document.getElementById("Posts").innerHTML+=CurTime+": "+document.getElementById("Species").value+" at "+document.getElementById("Address").value+"<br/>";
 
 	document.getElementById("Address").value="";
 	document.getElementById("Species").value="";
