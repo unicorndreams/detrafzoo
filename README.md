@@ -12,4 +12,4 @@ What it does not do:
 1. Doesn't create user accounts, so progress is not saved across sessions or if the application Page is reloaded.
 2. Doesn't keep permanent data, so contributions are not stored.
 3. Doesn't send any datum anywhere, so the "Register" button simply clears the input fields.
-4. Doesn't validate data, or process them in any way.
+4. Doesn't validate data, or process them in any way, except for populating the Mapper's posts.
