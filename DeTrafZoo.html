@@ -18,6 +18,7 @@ const Ranks=[
 var Username="";
 var UserCounter=0;
 var UserRanking=0;
+var Total=Math.ceil(Math.random()*1000+50);
 </script>
 </head>
 <body>
@@ -38,8 +39,8 @@ var UserRanking=0;
 	<table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:auto">
 	<tr>
 		<td width="120px">User: <span id="UserDisplay">anonymous</span></td>
-		<td width="120px">Reports: <span id="UserCounter">0</span></td>
-		<td width="120px">Ranking: <span id="UserRanking"></span></td>
+		<td id="Score" width="120px">Reports: <span id="UserCounter">0</span></td>
+		<td id="Ranking" width="120px">Ranking: <span id="UserRanking"></span></td>
 	</tr>
 	</table><br/>
 	<table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:auto">
@@ -130,6 +131,7 @@ var UserRanking=0;
 		</g>
 	</g>
 </svg>
+<p id="Summary" align="center"></p>
 </tr>
 <tr>
 <tr>
@@ -184,9 +186,11 @@ function Legioning()
 {	Username="anonymous";
 	UserCounter=-1;
 	UserRanking=-1;
-	document.getElementById("UserDisplay").innerHTML=Username;
+	document.getElementById("UserDisplay").innerHTML="<span style=\"color:#f00\">"+Username+"</span>";
 	document.getElementById("UserCounter").innerHTML="--";
 	document.getElementById("UserRanking").innerHTML="--";
+	document.getElementById("Score").style.display="none";
+	document.getElementById("Ranking").style.display="none";
 	Chatting();
 }
 
@@ -197,11 +201,15 @@ function LoggingIn()
 	document.getElementById("UserDisplay").innerHTML=Username;
 	document.getElementById("UserCounter").innerHTML=UserCounter;
 	document.getElementById("UserRanking").innerHTML=Ranks[UserRanking];
+	document.getElementById("Score").style.display="table-cell";
+	document.getElementById("Ranking").style.display="table-cell";
 	Chatting();
 }
 
 function Register()
-{	if (UserCounter>=0)
+{	Total++;
+
+	if (UserCounter>=0)
 	{	UserCounter++;
 		UserRanking=UserCounter>>2;
 
@@ -230,7 +238,7 @@ function Register()
 	document.getElementById("Files").value="";
 	document.getElementById("Report").checked=false;
 	document.getElementById("PostIt").checked=true;
-	Display("Mapper");
+	Chatting();
 }
 
 function NewContrib()
@@ -239,6 +247,7 @@ function NewContrib()
 
 function Chatting()
 {	Display("Mapper");
+	document.getElementById("Summary").innerHTML="Global contributions: <span style=\"color:#090\">"+Total+"</span>";
 }
 
 function PostMsg()
