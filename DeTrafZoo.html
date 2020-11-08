@@ -228,7 +228,7 @@ function Register()
 	CurTime=CurTime.getFullYear()+"-"+(CurTime.getMonth()+1)+"-"+(CurTime.getDate());
 
 	if (document.getElementById("PostIt").checked)
-		document.getElementById("Posts").innerHTML+="<span style=\"color:#00f\">"+Username+"</span> ("+CurTime+") contributed about <span style=\"color:#f00\">"+document.getElementById("Species").value+"</span> at <span style=\"color:#090\">"+document.getElementById("Address").value+"</span><br/>";
+		document.getElementById("Posts").innerHTML+="<span style=\"color:#00f\">"+Username+"</span> ("+CurTime+") contributed about <span style=\"color:#f00\">"+document.getElementById("Species").value+"</span>.<br/>";
 
 	document.getElementById("Address").value="";
 	document.getElementById("Species").value="";
